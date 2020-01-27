@@ -5,14 +5,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 
 
 
 
 const routes: Routes = [
-    {
-      path: '', component: RegisterComponent 
-    }
+    {path: '/register', component: RegisterComponent},
+    {path: '', component: LoginComponent }
   ];
   
 @NgModule({
@@ -25,7 +25,7 @@ const routes: Routes = [
     ],
     providers:[],
     exports: [RouterModule],
-    declarations: [RegisterComponent]
+    declarations: [RegisterComponent, LoginComponent]
   })
 export class CompteModule { 
 
