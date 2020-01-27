@@ -1,0 +1,24 @@
+<div class="col-md-10 mx-auto">
+        <div class="row">
+            <div class="col-lg-5 col-sm-6 col-xs-10 mx-auto">
+                <div class="card"    >
+                    <div class="card-image"> 
+                             <img src="{{ selectedArticle.image }}" class="img-thumbnail" alt="..."/> 
+                    </div>
+                 
+                    <div class="card-body">
+                        <h5 class="card-title">{{ selectedArticle.nom }}</h5>
+                        <p class="card-text">
+                            {{ selectedArticle.prixEuro }} €<br>
+                            {{ selectedArticle.prixDollars }} $<br>
+                            {{ selectedArticle.categorie }}<br>
+                            {{ selectedArticle.description }}<br>
+                        </p>
+
+                        <button class="btn btn-secondary" [routerLink]="['/catalogue']"><i class="fas fa-backward"></i></button>
+                        <button class="btn btn-primary" (click)="onAddClick(selectedArticle)"><i class="fas fa-shopping-basket"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

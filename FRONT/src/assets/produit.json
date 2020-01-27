@@ -1,0 +1,49 @@
+[
+    {
+        "id":"JHV0001",
+        "nom":"Maillot Houston #13 James Harden",
+        "prixEuro":"150",
+        "prixDollars":"165", 
+        "categorie":"vetements", 
+        "image":"https://www.cjoint.com/doc/19_10/IJBqvnEGCme_maillot-houston.jpg",
+        "description":"Le maillot Icon Edition représente les véritables couleurs de l'équipe, qui se reflètent dans un design distinct et immédiatement reconnaissable. Directement inspiré de la tenue des joueurs professionnels, le maillot Nike NBA Swingman Houston Rockets Icon Edition présente une conception classique en tissu à double maille premium et une coupe élégante sous tous les angles."
+    },
+    {
+        "id":"RG0001",
+        "nom":"Maillot Utah-Jazz #27 Rudy Gobert",
+        "prixEuro":"125",
+        "prixDollars":"140", 
+        "categorie":"vetements",
+        "image":"https://i.ibb.co/c2ht5G8/maillot-de-basket-ball-homme-city-edition-swingman-jersey-utah-jazz-rudy-gobert-orange-nike-rudy-gobert-maillots-de-basket-ball-8744-1560849132-2.png",
+        "description":"Maillot de Basket-Ball Homme Nike City Edition Swingman Jersey Utah Jazz Rudy Gobert Orange"
+    },
+    {
+        "id":"RW0001",
+        "nom":"Maillot Oklahoma city #0 Russel Westbrook",
+        "prixEuro":"65",
+        "prixDollars":"80", 
+        "categorie":"vetements",
+        "image":"https://i.ibb.co/YfJmTYw/maillot-nba-russell-westbrook-city-edition-swingman-pour-plus-age.jpg",
+        "description":"Maillot de Basket-Ball Homme Nike City Edition Swingman Jersey Utah Jazz Rudy Gobert Orange"
+    },
+    {
+        "id":"KB0001",
+        "nom":"Maillot Los Angeles #8 Kobe Briant",
+        "prixEuro":"100",
+        "prixDollars":"110", 
+        "categorie":"vetements",
+        "image":"https://i.ibb.co/Dwm8ZLm/z4fxds8isgpznz2wow1o.png",
+        "description":"Le maillot Icon Edition représente les véritables couleurs de l'équipe, qui se reflètent dans un design distinct et immédiatement reconnaissable. Directement inspiré de la tenue des joueurs professionnels, le maillot Nike NBA Los Angeles Lakers Icon Edition Swingman présente une conception classique en tissu à double maille premium et une coupe élégante sous tous les angles."
+    },
+    {
+        "id":"BNA0001",
+        "nom":"Balle nike",
+        "prixEuro":"45",
+        "prixDollars":"52", 
+        "categorie":"accesoires",
+        "image":"https://www.cjoint.com/doc/19_10/IJBqwCuNdEe_ballon.jpg",
+        "description":"Maillot de Basket-Ball Homme Nike City Edition Swingman Jersey Utah Jazz Rudy Gobert Orange"
+    }
+    
+    
+]
