@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, NgControl, NgForm } from '@angular/forms';
-import { Donnees }    from '../models/donnees';
+import { Donnees }    from '../../models/donnees';
 
 @Component({
   selector: 'app-compte',
