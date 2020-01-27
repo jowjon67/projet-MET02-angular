@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators, NgControl, NgForm, Rea
 import { Donnees }    from '../../../models/donnees';
 import { BrowserModule } from '@angular/platform-browser';
 
-
+import { Service } from 'src/app/service.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
     submitted = false;
 
-    constructor(private formBuilder: FormBuilder) { }
+    constructor(private formBuilder: FormBuilder, private apiService : Service) { }
 
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
@@ -48,6 +48,8 @@ export class RegisterComponent implements OnInit {
     onReset() {
         this.submitted = false;
         this.registerForm.reset();
+
+      
     }
 
 }
