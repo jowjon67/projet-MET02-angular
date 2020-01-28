@@ -18,7 +18,10 @@
         <a class="nav-link" routerLink="/catalogue" routerLinkActive="active">Catalogue</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" routerLink="/panier" routerLinkActive="active"><i class="fas fa-shopping-basket"></i> ({{nbArticles}})</a>
+        <a class="nav-link" routerLink="/panier" routerLinkActive="active"><i class="fas fa-shopping-basket"></i></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="onDisconnect()"><i class="fas fa-shopping-basket"></i> deconnexion</a>
     </li>
   </ul>
 </nav>

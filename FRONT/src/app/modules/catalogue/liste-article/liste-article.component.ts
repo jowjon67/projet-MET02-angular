@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 
 
-import {Observable,pipe } from 'rxjs';
+import {Observable,pipe, Subject } from 'rxjs';
 import { tap,map,switchMap  } from 'rxjs/operators';
 import { AddArticle } from 'shared/actions/addArticle';
 import { Store } from '@ngxs/store';
@@ -10,6 +10,7 @@ import { Article } from 'shared/models/article';
 import { Product } from 'src/app/models/product';
 import { Service } from 'src/app/service.service';
 import { DelArticle } from 'shared/actions/delArticle';
+import { ArticleFiltre } from 'src/app/models/filter';
 @Component({
   selector: 'app-liste-article',
   templateUrl: './liste-article.component.html',
@@ -25,7 +26,7 @@ export class ListeArticleComponent implements OnInit {
 
 }
 produits : Observable<Product[]>;
-
+filtre = new Subject<ArticleFiltre>();
 
 addArticle(id, nom, prixDollars, prixEuros, categorie, image, description ) { 
   this.store.dispatch(new AddArticle({ id, nom, prixEuros, prixDollars, categorie, image, description})); 
@@ -42,8 +43,22 @@ onDelClick(article:Product)
 onAddClick (article:Product) {
  this.addArticle (article.id, article.nom, article.prixDollars, article.prixEuro, article.categorie, article.image, article.description);
 }
+CheckMatching(obj, value)
+{
+  return true;
+}
+ngOnInit() 
+{
+  //this.produits = this.apiService.getProduitBackend();
+  this.filtre.subscribe({
+    next: (value) => 
+    {
+      this.produits = this.apiService.getProduitBackend().pipe(
+        map((objs: Product[]) => objs.filter((obj:Product) => this.CheckMatching(obj,value)))
+      );
+    }
 
-ngOnInit() {
-  this.produits = this.apiService.getProduitBackend();
+  })
+  
 }
 }

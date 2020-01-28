@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
       login: ['', Validators.required],
       password: ['', Validators.required]
   });
+  
   }
 
   get f() { return this.registerForm.controls; }
@@ -31,7 +32,9 @@ export class LoginComponent implements OnInit {
     }
 
     // display form values on success
-    this.apiService.postLogin( this.registerForm.value.login, this.registerForm.value.password);
+   this.apiService.postLogin( this.registerForm.value.login, this.registerForm.value.password);
+
+   console.log(sessionStorage.getItem("token"));
 }
 
 }

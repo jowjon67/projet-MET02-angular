@@ -17,6 +17,12 @@ export class TetiereComponent implements OnInit {
 
 
   ngOnInit() {
+    
+  }
+
+  onDisconnect()
+  {
+    sessionStorage.clear();
   }
 
 }

@@ -22,6 +22,7 @@ export class PanierComponent implements OnInit {
   {
     this.store.select(state => state.panier.panier).subscribe (u => this.nbArticles = u.length);
     this.panier = this.store.select(state => state.panier.panier);
+
   }
   delArticle(article)
   {
@@ -30,6 +31,12 @@ export class PanierComponent implements OnInit {
   onDelClick(article:Product)
   {
     this.delArticle(article);
+  }
+  onPay()
+  {
+    this.panier=null;
+    this.nbArticles=0;
+    alert("La totalité du panier a été réglée");
   }
   ngOnInit() {
   }

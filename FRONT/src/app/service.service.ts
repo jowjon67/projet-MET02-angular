@@ -35,12 +35,10 @@ export class Service {
         'Content-Type': 'application/json',
       })
     };
-    this.http.post<any>(environment.login,data, httpOptions).subscribe(dataReturned => 
+    return this.http.post<any>(environment.login,data, httpOptions).subscribe(dataReturned => 
       {
-
         sessionStorage.clear();
         sessionStorage.setItem("token",dataReturned['token']);
-           
       });
   }
 
