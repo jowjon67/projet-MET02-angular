@@ -9,10 +9,31 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: HEAD,POST,GET,PUT,PATCH,DELETE");
 
+const JWT_SECRET = "makey1234567";
+
+$jwt = new \Slim\Middleware\JwtAuthentication([
+"path" => "/api",
+"secure" => false,
+"secret" => JWT_SECRET,
+"passthrough" => ["/login"],
+"attribute" => "decoded_token_data",
+"algorithm" => ["HS256"]
+]);
+
+// Launch API
+$app = new \Slim\App;
+$app->add($jwt);
+$app->get('/productsOld', 'getProductsOld');
+$app->get('/api/products', 'getProducts');
+$app->post('/auth', 'login');
+$app->post('/signup', 'signup');
+$app->get('/info', 'getInfoUser');
+
+$app->run();
 
 
 // /products route
-function getProducts($request, $response, $args)
+function getProductsOld($request, $response, $args)
 {
     if (isset($args['id']))
     {
@@ -24,101 +45,80 @@ function getProducts($request, $response, $args)
     return $response->withHeader("Content-Type", "application/json")
         ->write($mock);
 }
-
-// /auth route
-function postLogin($request, $response, $args)
+function getProducts($request, $response, $args)
 {
-    $auth = $request->getHeader("Authorization");
-    if (isset($auth) && count($auth) == 1)
-    {
-        // getting user:password from Basic credentials
-        $auth_array = explode(" ", $auth[0]);
-        if ($auth_array[0] == "Basic")
-        {
-            $un_pw = explode(":", base64_decode($auth_array[1]));
-            if (isset($un_pw[0]) && isset($un_pw[1]))
-            {
-                $un = $un_pw[0];
-                $pw = $un_pw[1];
-                // TODO check user identity
-
-                // return JWT Token
-                $issuedAt = time();
-                $expirationTime = $issuedAt + 3600 * 24 * 1; // jwt valid for 60 seconds from the issued time
-                $payload = array(
-                    'userid' => $un,
-                    'iat' => $issuedAt,
-                    'exp' => $expirationTime
-                );
-                $token_jwt = JWT::encode($payload, JWT_SECRET, "HS256");
-                $data = array(
-                    'token' => $token_jwt
-                );
-                return $response->withHeader("Content-Type", "application/json")
-                    ->withJson($data)->withStatus(200);
-            }
-        }
-    }
-    return $response->withStatus(401);
+    include "list_products.php";
 }
 
-// /signup route
-function postSignup($request, $response, $args)
+function login ($request, $response, $args)
 {
-    $isOK = true;
-    $response->withStatus(412);
-    $data = array(
-        'errors' => array()
+    require_once "bootstrap.php";
+
+  $body = $request->getParsedBody();
+  $nom = $body["email"];
+  $prenom = $body["password"];
+
+  $clientRepository = $entityManager->getRepository('Client');
+  $clients = $clientRepository->findAll();
+
+  $tab = array();
+  $isAuth=0;
+  foreach ($clients as $client)
+  {
+    if( $body["email"] == $client->getEmail() && $body["password"] == $client->getMotDePasse())
+    {
+      $isAuth=1;
+    }
+
+  }
+  if($isAuth==1)
+  {
+    $issuedAt = time();
+    $expirationTime = $issuedAt + 6969; // jwt valid for 60 seconds from the issued time
+    $payload = array(
+    'userid' => $client->getId(),
+    'iat' => $issuedAt,
+    'exp' => $expirationTime
     );
-    $params = $request->getParsedBody();
-    if (!isset($params['login']))
-    {
-        $isOK = false;
-        array_push($data['errors'], "login missing.");
-    }
-    if (!isset($params['password']))
-    {
-        $isOK = false;
-        array_push($data['errors'], "password missing.");
-    }
-    if (!isset($params['passwordConfirmation']))
-    {
-        $isOK = false;
-        array_push($data['errors'], "passwordConfirmation missing.");
-    }
-    if (isset($params['passwordConfirmation']) && isset($params['password']) && $params['passwordConfirmation'] != $params['password'])
-    {
-        $isOK = false;
-        array_push($data['errors'], "password mismatch.");
-    }
-    if (!isset($params['email']))
-    {
-        $isOK = false;
-        array_push($data['errors'], "email missing.");
-    }
-    else
-    {
-        preg_match('/[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}/', $params['email'], $matches);
-        if (count($matches) != 1)
-        {
-            $isOK = false;
-            array_push($data['errors'], "wrong email.");
-        }
-    }
-    if ($isOK)
-    {
-        // TODO Create user
-        $response->withStatus(201);
-    }
-    return $response
-        ->withHeader("Content-Type", "application/json")
-        ->withJson($data);
+    $token_jwt = JWT::encode($payload,JWT_SECRET, "HS256");
+
+    $response = $response->withHeader("Content-Type", "application/json");
+
+    $data = array('id' => $client->getId(), 'token' => $token_jwt);
+    return $response->withHeader("Content-Type", "application/json")->withJson($data);
+  }
+  else
+  {
+    $data = array('id' => '0', 'token' => '0');
+    return $response->withHeader("Content-Type", "application/json")->withJson($data);
+  }
 }
 
-// Launch API
-$app = new \Slim\App;
-$app->get('/products', 'getProducts');
-$app->post('/auth', 'postLogin');
-$app->post('/signup', 'postSignup');
-$app->run();
+  function getInfoUser($request, $response, $args)
+  {
+    include "show_client.php";
+    /*
+    require_once "bootstrap.php";
+
+
+    $id = $_GET['id'];
+
+    $client = $entityManager->find('Client', $id);
+
+    if ($client === null) {
+        echo "No Client found.\n";
+        exit(1);
+    }
+      return $response->withHeader("Content-Type", "application/json")->withJson($client);
+*/
+  }
+
+
+  function signup($request, $response, $args)
+  {
+    include "create_client.php";
+  }
+
+
+
 ?>

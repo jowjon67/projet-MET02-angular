@@ -18,6 +18,7 @@ import { NgxsModule } from '@ngxs/store';
 
 
 import { PanierState } from 'shared/states/panier-state';
+import { AccueilComponent } from './accueil/accueil.component';
 //import { CompteComponent } from './compte/compte.component';
 
 
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
   },
   { path: 'panier', 
     loadChildren: () => import('./modules/panier/panier.module').then(m => m.PanierModule) 
-  }
+  },
+  { path: 'accueil', component: AccueilComponent }
 ];
 
 @NgModule({
@@ -42,7 +44,8 @@ const appRoutes: Routes = [
     FooterComponent,
     RecapitulatifComponent,
     PhoneNumberPipe,
-    ErrorDirective
+    ErrorDirective,
+    AccueilComponent
   ],
   imports: [
     NgxsModule.forRoot([

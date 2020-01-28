@@ -8,11 +8,12 @@ $products = $productRepository->findAll();
 $tab = array();
 foreach ($products as $product) {
    $tab[] = array("id"  => $product->getId(),
-                  "name" => $product->getName(),
+                  "nom" => $product->getName(),
                   "prixEuro" => $product->getPrixEuro(),
                   "prixDollars" => $product->getPrixDollars(),
                   "categorie" => $product->getCategorie(),
-                  "image" => $product->getImage()
+                  "image" => $product->getImage(),
+                  "description" => $product->getDescription()
                 );
 }
     echo (json_encode($tab));

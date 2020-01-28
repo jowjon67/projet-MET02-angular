@@ -43,9 +43,20 @@ onDelClick(article:Product)
 onAddClick (article:Product) {
  this.addArticle (article.id, article.nom, article.prixDollars, article.prixEuro, article.categorie, article.image, article.description);
 }
-CheckMatching(obj, value)
+compare(obj, value)
 {
+  if(obj == value)
+  {
+    return true;
+  }
+  else{
+    return false;
+  }
   return true;
+}
+refreshFiltre()
+{
+  //this.filtre.next(ArticleFiltre);
 }
 ngOnInit() 
 {
@@ -54,11 +65,13 @@ ngOnInit()
     next: (value) => 
     {
       this.produits = this.apiService.getProduitBackend().pipe(
-        map((objs: Product[]) => objs.filter((obj:Product) => this.CheckMatching(obj,value)))
+        map((objs: Product[]) => objs.filter((obj:Product) => this.compare(obj,value)))
       );
     }
 
   })
+
+  this.filtre.next(new ArticleFiltre());
   
 }
 }

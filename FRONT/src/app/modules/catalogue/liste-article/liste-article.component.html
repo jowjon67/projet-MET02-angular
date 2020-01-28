@@ -1,5 +1,5 @@
 
-<app-filtre-produits (filter)="sendFiltreParNom($event)" ></app-filtre-produits>
+<app-filtre-produits (change)="refreshFiltre()" ></app-filtre-produits>
 <div class="col-md-10 mx-auto">
         <div class="row">
             <div class="col-lg-4 col-sm-6 col-xs-10 mx-auto" *ngFor="let x of produits | async">

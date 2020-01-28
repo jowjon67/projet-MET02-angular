@@ -37,7 +37,7 @@ use Doctrine\ORM\Mapping as ORM;
       */
      protected $image;
      /**
-      * @ORM\Column(type="string")
+      * @ORM\Column(type="string", length=1500)
       */
      protected $description;
 
