@@ -7,6 +7,8 @@ export const environment = {
   mode: 'Local',
   backendProduit : 'http://localhost/index.php/api/products',
   login : 'http://localhost/index.php/auth',
+  register: 'http://localhost/index.php/signup',
+  informationUtilisateur: 'http://localhost/index.php/info',
   backendCatalogue : '/assets/mock/toto.json',
   backendConnexion: 'http://node20.codenvy.io:45064/backEnd/public/index.php/api'
 };

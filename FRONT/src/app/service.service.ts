@@ -2,8 +2,9 @@
 import { Injectable } from '@angular/core';
 import { Observable,of,from,interval } from 'rxjs'; 
 import { map,tap  } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,6 @@ export class Service {
   constructor(private http : HttpClient) { }
   
   public getProduitBackend() : Observable<any> {
-    console.log("Get produit backend \n" + sessionStorage.getItem("token"));
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -26,8 +26,8 @@ export class Service {
   public postLogin(login, mdp)
   {
     let data = JSON.stringify({
-      login: login,
-      motDePasse: mdp
+      email: login,
+      password: mdp
     });
     let httpOptions = 
     {
@@ -35,12 +35,43 @@ export class Service {
         'Content-Type': 'application/json',
       })
     };
-    this.http.post<Object>(environment.login,data, httpOptions).subscribe(dataReturned => 
+    this.http.post<any>(environment.login,data, httpOptions).subscribe(dataReturned => 
       {
+
         sessionStorage.clear();
-        sessionStorage.setItem("token",dataReturned['token'] );
-        console.log("mise en session \n" + sessionStorage.getItem("token"));
+        sessionStorage.setItem("token",dataReturned['token']);
+           
       });
+  }
+
+  public postRegister(data)
+  {
+    console.log(data);
+    let httpOptions = 
+    {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    this.http.post<Object>(environment.register,data, httpOptions).subscribe(dataReturned => 
+      {
+          
+      });
+  }
+
+  public getInfoRegister(uid) : Observable<any> 
+  {
+    let data = JSON.stringify({
+      id: uid
+    });
+    let httpOptions = 
+    {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    const params = new HttpParams().set('id', '1');
+    return this.http.get(environment.informationUtilisateur,{params});
   }
 
 

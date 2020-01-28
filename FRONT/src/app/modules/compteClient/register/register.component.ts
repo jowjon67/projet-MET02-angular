@@ -4,6 +4,7 @@ import { Donnees }    from '../../../models/donnees';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { Service } from 'src/app/service.service';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -12,19 +13,28 @@ import { Service } from 'src/app/service.service';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
+  informationUser : Observable<Donnees[]>;
     submitted = false;
 
     constructor(private formBuilder: FormBuilder, private apiService : Service) { }
 
     ngOnInit() {
+       
+        if(sessionStorage.getItem("token")!="")
+        {
+            this.informationUser = this.apiService.getInfoRegister(1);
+            this.informationUser.subscribe(a => console.log(a));
+            this.informationUser.subscribe({
+                next(value) { console.log(value); },
+                complete() { console.log("C'est fini!"); }
+            });
+        }
         this.registerForm = this.formBuilder.group({
-            title: ['', Validators.required],
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
+            nom: ['', Validators.required],
+            prenom: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required, Validators.minLength(6)]],
-            confirmPassword: ['', Validators.required],
-            acceptTerms: [false, Validators.requiredTrue]
+            motDePasse: ['', [Validators.required, Validators.minLength(6)]],
+            confirmerMotDePasse: ['',[Validators.required, Validators.minLength(6)]]
         }, {
             //validator: MustMatch('password', 'confirmPassword')
         });
@@ -43,6 +53,7 @@ export class RegisterComponent implements OnInit {
 
         // display form values on success
         alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+        this.apiService.postRegister(this.registerForm.value);
     }
 
     onReset() {
