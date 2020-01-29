@@ -34,9 +34,8 @@ export class PanierComponent implements OnInit {
   }
   onPay()
   {
-    this.panier=null;
-    this.nbArticles=0;
     alert("La totalité du panier a été réglée");
+    window.location.href="http://localhost:4200";
   }
   ngOnInit() {
   }
