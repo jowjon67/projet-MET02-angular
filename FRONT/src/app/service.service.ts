@@ -66,9 +66,10 @@ export class Service {
     {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + sessionStorage.getItem("token")
       })
     };
-    const params = new HttpParams().set('id', '1');
+    const params = new HttpParams().set('id', uid);
     return this.http.get(environment.informationUtilisateur,{params});
   }
 

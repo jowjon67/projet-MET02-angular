@@ -1,4 +1,6 @@
 import { Component, OnInit, EventEmitter,Output } from '@angular/core';
+import { ArticleFiltre } from '../models/filter';
+import { Article } from 'shared/models/article';
 
 @Component({
   selector: 'app-filtre-produits',
@@ -7,8 +9,8 @@ import { Component, OnInit, EventEmitter,Output } from '@angular/core';
 })
 export class FiltreProduitsComponent implements OnInit {
 
-  @Output() filter : EventEmitter<String> = new EventEmitter<String>();
-  filtreNom : String = "";
+  @Output() filter : EventEmitter<ArticleFiltre> = new EventEmitter<ArticleFiltre>();
+  filtreNom : string = "";
 
   constructor() { }
 
@@ -16,7 +18,10 @@ export class FiltreProduitsComponent implements OnInit {
   }
 
   sendFiltreParNom(){
-    this.filter.emit(this.filtreNom);
+    let f = new ArticleFiltre();
+    f.nom = this.filtreNom;
+
+    this.filter.emit(f);
   }
 
 }

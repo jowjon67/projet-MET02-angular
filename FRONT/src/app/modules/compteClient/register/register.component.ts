@@ -14,30 +14,36 @@ export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
   informationUser : Observable<Donnees[]>;
+  nom="";
+  prenom="";
+  email="";
     submitted = false;
+    user: Donnees; // toujours le meilleur nom de varmidarblerrrrrrrmdrrrrrrrrrr
 
     constructor(private formBuilder: FormBuilder, private apiService : Service) { }
 
     ngOnInit() {
-       
-        if(sessionStorage.getItem("token")!="")
-        {
-            this.informationUser = this.apiService.getInfoRegister(1);
-            this.informationUser.subscribe(a => console.log(a));
-            this.informationUser.subscribe({
-                next(value) { console.log(value); },
-                complete() { console.log("C'est fini!"); }
-            });
-        }
+        this.user=null;
         this.registerForm = this.formBuilder.group({
-            nom: ['', Validators.required],
-            prenom: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
+            nom: [this.nom, Validators.required],
+            prenom: [this.prenom, Validators.required],
+            email: [this.email, [Validators.required, Validators.email]],
             motDePasse: ['', [Validators.required, Validators.minLength(6)]],
             confirmerMotDePasse: ['',[Validators.required, Validators.minLength(6)]]
         }, {
             //validator: MustMatch('password', 'confirmPassword')
         });
+        if(sessionStorage.getItem("token")!=null)
+        {
+            this.apiService.getInfoRegister(sessionStorage.getItem("token")).subscribe( user =>{
+                this.user = user as Donnees;
+                this.registerForm.patchValue({nom: this.user.nom})
+                this.registerForm.patchValue({prenom: this.user.prenom})
+                this.registerForm.patchValue({email: this.user.email})
+            })
+         
+            
+        }        
     }
 
     // convenience getter for easy access to form fields
