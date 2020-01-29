@@ -39,6 +39,7 @@ export class Service {
       {
         sessionStorage.clear();
         sessionStorage.setItem("token",dataReturned['token']);
+        sessionStorage.setItem('id',dataReturned['id']);
       });
   }
 
@@ -65,11 +66,11 @@ export class Service {
     let httpOptions = 
     {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+        'Content-Type': 'application/json'
       })
     };
-    const params = new HttpParams().set('id', uid);
+  
+    const params = new HttpParams().set('id', sessionStorage.getItem("id"));
     return this.http.get(environment.informationUtilisateur,{params});
   }
 

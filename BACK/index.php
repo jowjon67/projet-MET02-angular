@@ -63,11 +63,13 @@ function login ($request, $response, $args)
 
   $tab = array();
   $isAuth=0;
+  $id=0;
   foreach ($clients as $client)
   {
     if( $body["email"] == $client->getEmail() && $body["password"] == $client->getMotDePasse())
     {
       $isAuth=1;
+      $id=$client->getId();
     }
 
   }
@@ -76,7 +78,7 @@ function login ($request, $response, $args)
     $issuedAt = time();
     $expirationTime = $issuedAt + 6969; // jwt valid for 60 seconds from the issued time
     $payload = array(
-    'userid' => $client->getId(),
+    'userid' => $id,
     'iat' => $issuedAt,
     'exp' => $expirationTime
     );
@@ -84,7 +86,7 @@ function login ($request, $response, $args)
 
     $response = $response->withHeader("Content-Type", "application/json");
 
-    $data = array('id' => $client->getId(), 'token' => $token_jwt);
+    $data = array('id' => $id, 'token' => $token_jwt);
     return $response->withHeader("Content-Type", "application/json")->withJson($data);
   }
   else
@@ -96,12 +98,11 @@ function login ($request, $response, $args)
 
   function getInfoUser($request, $response, $args)
   {
-    include "show_client.php";
-    /*
     require_once "bootstrap.php";
 
+    //$token = $_GET['token'];
+    $id=$_GET['id'];
 
-    $id = $_GET['id'];
 
     $client = $entityManager->find('Client', $id);
 
@@ -109,8 +110,19 @@ function login ($request, $response, $args)
         echo "No Client found.\n";
         exit(1);
     }
-      return $response->withHeader("Content-Type", "application/json")->withJson($client);
-*/
+
+    $tab = array();
+
+       $tab = array("id"  => $client->getId(),
+                      "nom" => $client->getNom(),
+                      "prenom" => $client->getPrenom(),
+                      "email" => $client->getEmail(),
+                      "motDePasse" => $client->getMotDePasse()
+                    );
+
+        return $response->withHeader("Content-Type", "application/json")->withJson($tab);
+// echo et var_dump marche tres bie pour test.
+//félicitation t'a un return on peu test
   }
 
 

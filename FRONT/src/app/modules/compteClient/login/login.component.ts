@@ -16,9 +16,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      login: ['', Validators.required],
-      password: ['', Validators.required]});
-    if(sessionStorage.getItem('token')!=null)
+    login: ['', Validators.required],
+    password: ['', Validators.required]});
+    if(sessionStorage.getItem('token') == "0" || sessionStorage.getItem('token')==null)
+    {
+
+    }
+    else
     {
       this.router.navigate(['catalogue']);
     }

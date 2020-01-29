@@ -33,17 +33,18 @@ export class RegisterComponent implements OnInit {
         }, {
             //validator: MustMatch('password', 'confirmPassword')
         });
-        if(sessionStorage.getItem("token")!=null)
+        if(sessionStorage.getItem('token') == "0" || sessionStorage.getItem('token')==null)
         {
-            this.apiService.getInfoRegister(sessionStorage.getItem("token")).subscribe( user =>{
+
+        }
+        else{
+            this.apiService.getInfoRegister(sessionStorage.getItem("id")).subscribe( user =>{
                 this.user = user as Donnees;
                 this.registerForm.patchValue({nom: this.user.nom})
                 this.registerForm.patchValue({prenom: this.user.prenom})
                 this.registerForm.patchValue({email: this.user.email})
             })
-         
-            
-        }        
+        }     
     }
 
     // convenience getter for easy access to form fields

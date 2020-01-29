@@ -42,14 +42,8 @@ export class ListeArticleComponent implements OnInit {
     this.addArticle(article.id, article.nom, article.prixDollars, article.prixEuro, article.categorie, article.image, article.description);
   }
   compare(obj, value) {
-    console.log(obj.nom+" "+value);
-    if(obj.nom == value.nom)
-    {
-      return true;
-    }
-    else{
-      return false;
-    }   
+    return true;
+    
   }
   refreshFiltre($event) {
     this.filtre.next($event);
